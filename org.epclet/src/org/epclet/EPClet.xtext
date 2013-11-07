@@ -1,0 +1,18 @@
+grammar org.epclet.EPClet with org.eclipse.xtext.common.Terminals
+
+generate ePClet "http://www.epclet.org/EPClet"
+
+Script: (block+=Block)*;
+/* A block (a Scope) may contain multiple EPClets*/
+Block: ( name=EPC_Name) '{'
+		epclets+=EPClet*
+	'}'	
+;
+
+EPC_Name:name=ID;
+
+EPClet:pre=EP '->' task=ID ('toProcess' tp=[EPC_Name])? ('by' role=Role)? '->' post=EP ';' ;
+ 
+Role: roleId=ID ;
+EP:	value=STRING;
+ 
